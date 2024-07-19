@@ -6,6 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:storybook/recommended"
   ],
   parserOptions: {
     ecmaVersion: 2022,
