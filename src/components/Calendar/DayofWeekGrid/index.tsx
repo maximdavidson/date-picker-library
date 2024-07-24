@@ -11,7 +11,7 @@ type DayOfWeekGridProps = {
   type?: string;
 };
 
-const DayOfWeekGrid: React.FC<DayOfWeekGridProps> = ({
+export const DayOfWeekGrid: React.FC<DayOfWeekGridProps> = ({
   isHolidayDate,
   isMondayFirst,
   isTodosEnabled,
@@ -23,5 +23,3 @@ const DayOfWeekGrid: React.FC<DayOfWeekGridProps> = ({
 }) => {
   return null;
 };
-
-export { DayOfWeekGrid };

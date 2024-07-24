@@ -1,22 +1,31 @@
 import React from 'react';
-import { WeekdaysHeaderContainer } from '../styled';
+import { WeekdayLabel } from './styled';
 
-type WeekdaysHeaderProps = {
+type WeekdayHeaderProps = {
   isMondayFirst?: boolean;
 };
 
-const WeekdaysHeader: React.FC<WeekdaysHeaderProps> = ({ isMondayFirst }) => {
-  const weekdays = isMondayFirst
-    ? ['MO', 'TU', 'WE', 'TH', 'FR', 'ST', 'SU']
-    : ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'ST'];
-
-  return (
-    <WeekdaysHeaderContainer>
-      {weekdays.map((day) => (
-        <div key={day}>{day}</div>
-      ))}
-    </WeekdaysHeaderContainer>
-  );
+const getWeekdayLabels = (isMondayFirst: boolean) => {
+  return isMondayFirst
+    ? ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU']
+    : ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 };
 
-export { WeekdaysHeader };
+export const WeekdayHeader: React.FC<WeekdayHeaderProps> = ({
+  isMondayFirst = false,
+}) => {
+  const weekdayLabels = getWeekdayLabels(isMondayFirst);
+
+  return (
+    <>
+      {weekdayLabels.map((label, index) => (
+        <WeekdayLabel
+          key={`label-${index}`}
+          isWeekend={label === 'SA' || label === 'SU'}
+        >
+          {label}
+        </WeekdayLabel>
+      ))}
+    </>
+  );
+};

@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { useDate } from '../../providers/DateProviders';
 import { GridSlider } from './GridSlider';
 import { DayOfWeekGrid } from './DayofWeekGrid/';
-import { WeekdaysHeader } from './WeekdaysHeader';
 import { Button, CalendarContainer } from './styled';
 import { ErrorBoundary } from '../ErrorBoundary';
 
@@ -22,7 +21,7 @@ const CALENDAR_TYPES = {
   Week: 'Week',
 };
 
-const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
+export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
   const {
     type = CALENDAR_TYPES.Month,
     isMondayFirst,
@@ -46,7 +45,6 @@ const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
   return (
     <ErrorBoundary>
       <div>
-        <WeekdaysHeader isMondayFirst={isMondayFirst} />
         <CalendarContainer>
           <GridSlider
             isMondayFirst={isMondayFirst}
@@ -72,5 +70,3 @@ const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
     </ErrorBoundary>
   );
 };
-
-export { Calendar };

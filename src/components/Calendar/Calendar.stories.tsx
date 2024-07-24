@@ -31,7 +31,6 @@ const Template: Story = {
 export const Default: Story = {
   ...Template,
   args: {
-    isWithRange: true,
     isMondayFirst: true,
   },
 };
