@@ -2,6 +2,7 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Calendar, CalendarProps } from './index';
 import { DateProvider } from 'providers/DateProviders';
+import { GlobalStyle } from '../../globalStyles';
 
 export default {
   title: 'Components/Calendar',
@@ -19,6 +20,7 @@ type Story = StoryObj<CalendarProps>;
 const Template: Story = {
   render: (args) => (
     <DateProvider>
+      <GlobalStyle />
       <Calendar {...args} />
     </DateProvider>
   ),
