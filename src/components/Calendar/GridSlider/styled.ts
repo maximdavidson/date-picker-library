@@ -8,18 +8,18 @@ export const DaysContainer = styled.div`
 `;
 
 export const DayBox = styled.div<{
-  isWeekend: boolean;
   isOutsideMonth: boolean;
+  isWeekend: boolean;
 }>`
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px;
   text-align: center;
-  background-color: ${({ isWeekend }) => (isWeekend ? '#fdd' : 'transparent')};
+  background-color: transparent;
   border: 1px solid rgba(225, 225, 225, 0);
   border-radius: 8px;
   box-sizing: border-box;
-  color: ${({ isOutsideMonth }) =>
-    isOutsideMonth ? 'rgba(170, 170, 170, 1)' : 'inherit'};
+  color: ${({ isOutsideMonth, isWeekend }) =>
+    isOutsideMonth ? 'rgba(170, 170, 170, 1)' : isWeekend ? 'red' : 'inherit'};
 `;

@@ -45,6 +45,11 @@ const getNextMonthDays = (year: number, month: number, daysInMonth: Date[]) => {
   return daysInNextMonth;
 };
 
+const isWeekend = (date: Date, isMondayFirst: boolean) => {
+  const day = date.getDay();
+  return isMondayFirst ? day === 5 || day === 6 : day === 0 || day === 6;
+};
+
 export const GridSlider: React.FC<GridSliderProps> = ({
   isMondayFirst = false,
   minDate,
@@ -67,8 +72,8 @@ export const GridSlider: React.FC<GridSliderProps> = ({
       {allDays.map((day) => (
         <DayBox
           key={day.toISOString()}
-          isWeekend={day.getDay() === 0 || day.getDay() === 6}
           isOutsideMonth={day.getMonth() !== month}
+          isWeekend={isWeekend(day, isMondayFirst)}
         >
           {day.getDate()}
         </DayBox>
