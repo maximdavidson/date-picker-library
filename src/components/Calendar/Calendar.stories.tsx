@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Calendar, CalendarProps } from './index';
-import { DateProvider } from '../../providers/DateProviders';
+import { DateProvider } from 'providers/DateProviders';
 
 export default {
   title: 'Components/Calendar',
@@ -10,10 +10,6 @@ export default {
     type: { control: 'select', options: ['Month', 'Week'] },
     isMondayFirst: { control: 'boolean' },
     isWeekendDate: { action: 'isWeekendDate' },
-    isWithRange: { control: 'boolean' },
-    minDate: { control: 'date' },
-    maxDate: { control: 'date' },
-    isTodosEnabled: { control: 'boolean' },
     isHolidayDate: { action: 'isHolidayDate' },
   },
 } as Meta<typeof Calendar>;

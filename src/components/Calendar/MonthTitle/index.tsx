@@ -1,23 +1,10 @@
 import React from 'react';
 import { Title } from './styled';
+import { MONTHS } from 'constants/months';
+
 type MonthTitleProps = {
   currentDate: Date;
 };
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 export const MonthTitle: React.FC<MonthTitleProps> = ({ currentDate }) => {
   const monthName = MONTHS[currentDate.getMonth()];

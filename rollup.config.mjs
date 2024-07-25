@@ -1,11 +1,11 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import dts from 'rollup-plugin-dts';
 import { terser } from 'rollup-plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-
-import packageJson from './package.json' assert { type: 'json' };
+import alias from '@rollup/plugin-alias';
+import path from 'path';
+import packageJson from './package.json';
 
 export default [
   {
@@ -24,16 +24,36 @@ export default [
     ],
     plugins: [
       peerDepsExternal(),
+      alias({
+        entries: [
+          {
+            find: 'assets',
+            replacement: path.resolve(__dirname, 'src/assets'),
+          },
+          {
+            find: 'components',
+            replacement: path.resolve(__dirname, 'src/components'),
+          },
+          {
+            find: 'decorators',
+            replacement: path.resolve(__dirname, 'src/decorators'),
+          },
+          { find: 'hooks', replacement: path.resolve(__dirname, 'src/hooks') },
+          {
+            find: 'providers',
+            replacement: path.resolve(__dirname, 'src/providers'),
+          },
+          { find: 'utils', replacement: path.resolve(__dirname, 'src/utils') },
+          {
+            find: 'constants',
+            replacement: path.resolve(__dirname, 'src/constants'),
+          },
+        ],
+      }),
       resolve(),
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
       terser(),
     ],
-  },
-  {
-    input: 'dist/esm/types/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'esm' }],
-    plugins: [dts()],
-    external: [/\.css$/],
   },
 ];

@@ -14,6 +14,16 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+
+    "paths": {
+      "assets/*": ["./src/assets/*"],
+      "components/*": ["./src/components/*"],
+      "decorators/*": ["./src/decorators/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "providers/*": ["./src/providers/*"],
+      "utils/*": ["./src/utils/*"],
+      "constants/*": ["./src/constants/*"]
+    }
   }
 }

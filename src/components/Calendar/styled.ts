@@ -31,5 +31,3 @@ export const ArrowButtonNext = styled.img`
   padding-left: 44px;
   padding-top: 10px;
 `;
-
-export const Button = styled.button``;
