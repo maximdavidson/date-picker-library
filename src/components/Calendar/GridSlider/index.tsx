@@ -7,6 +7,7 @@ type GridSliderProps = {
   minDate?: Date;
   maxDate?: Date;
   type?: string;
+  currentDate: Date;
 };
 
 const getDaysInMonth = (year: number, month: number) => {
@@ -55,10 +56,10 @@ export const GridSlider: React.FC<GridSliderProps> = ({
   minDate,
   maxDate,
   type,
+  currentDate,
 }) => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
 
   const days = getDaysInMonth(year, month);
   const prevMonthDays = getPreviousMonthDays(year, month);

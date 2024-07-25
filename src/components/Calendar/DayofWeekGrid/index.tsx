@@ -9,6 +9,7 @@ type DayOfWeekGridProps = {
   maxDate?: Date;
   minDate?: Date;
   type?: string;
+  currentDate: Date;
 };
 
 export const DayOfWeekGrid: React.FC<DayOfWeekGridProps> = ({

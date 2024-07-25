@@ -1,5 +1,5 @@
 export { ErrorBoundary } from './ErrorBoundary';
 export { Calendar } from './Calendar';
-export { GridSlider } from '../components/Calendar/GridSlider';
-export { DayOfWeekGrid } from '../components/Calendar/DayofWeekGrid';
+export { GridSlider } from './Calendar/GridSlider';
+export { DayOfWeekGrid } from './Calendar/DayofWeekGrid';
 export { CalendarContainer, Button } from './Calendar/styled';

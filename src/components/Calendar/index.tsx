@@ -1,9 +1,18 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDate } from '../../providers/DateProviders';
 import { GridSlider } from './GridSlider';
 import { DayOfWeekGrid } from './DayofWeekGrid/';
-import { Button, CalendarContainer } from './styled';
+import {
+  Button,
+  CalendarContainer,
+  ArrowButtonPrev,
+  ArrowButtonNext,
+  HeaderContainer,
+} from './styled';
 import { ErrorBoundary } from '../ErrorBoundary';
+import PrevImg from '../../assets/Prev.png';
+import NextImg from '../../assets/Next.png';
+import { MonthTitle } from './MonthTitle';
 
 export type CalendarProps = {
   type?: 'Month' | 'Week';
@@ -35,6 +44,8 @@ export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
 
   const { range, clearRange } = useDate();
 
+  const [currentDate, setCurrentDate] = useState(new Date());
+
   const handleClearButtonClick = useCallback(() => {
     clearRange();
   }, [clearRange]);
@@ -42,31 +53,58 @@ export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
   const isRangeExist =
     isWithRange && Boolean(range?.rangeStart) && Boolean(range?.rangeEnd);
 
+  const handlePrevMonth = () => {
+    setCurrentDate((prev) => {
+      const newDate = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
+      return newDate;
+    });
+  };
+
+  const handleNextMonth = () => {
+    setCurrentDate((prev) => {
+      const newDate = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
+      return newDate;
+    });
+  };
+
   return (
     <ErrorBoundary>
-      <div>
-        <CalendarContainer>
-          <GridSlider
-            isMondayFirst={isMondayFirst}
-            maxDate={maxDate}
-            minDate={minDate}
-            type={type}
+      <CalendarContainer>
+        <HeaderContainer>
+          <ArrowButtonPrev
+            onClick={handlePrevMonth}
+            src={PrevImg}
+            alt="Previous Month"
           />
-          <DayOfWeekGrid
-            isHolidayDate={isHolidayDate}
-            isMondayFirst={isMondayFirst}
-            isTodosEnabled={isTodosEnabled}
-            isWeekendDate={isWeekendDate}
-            isWithRange={isWithRange}
-            maxDate={maxDate}
-            minDate={minDate}
-            type={type}
+          <MonthTitle currentDate={currentDate} />
+          <ArrowButtonNext
+            onClick={handleNextMonth}
+            src={NextImg}
+            alt="Next Month"
           />
-        </CalendarContainer>
+        </HeaderContainer>
+        <GridSlider
+          isMondayFirst={isMondayFirst}
+          maxDate={maxDate}
+          minDate={minDate}
+          type={type}
+          currentDate={currentDate}
+        />
+        <DayOfWeekGrid
+          isHolidayDate={isHolidayDate}
+          isMondayFirst={isMondayFirst}
+          isTodosEnabled={isTodosEnabled}
+          isWeekendDate={isWeekendDate}
+          isWithRange={isWithRange}
+          maxDate={maxDate}
+          minDate={minDate}
+          type={type}
+          currentDate={currentDate}
+        />
         {isRangeExist && (
           <Button onClick={handleClearButtonClick}>Clear</Button>
         )}
-      </div>
+      </CalendarContainer>
     </ErrorBoundary>
   );
 };

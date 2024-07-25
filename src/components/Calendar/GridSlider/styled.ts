@@ -4,17 +4,19 @@ export const DaysContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(6, 1fr);
-  gap: 3px;
+  gap: 1px;
 `;
 
 export const DayBox = styled.div<{
   isOutsideMonth: boolean;
   isWeekend: boolean;
 }>`
+  font-size: 13px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: 1px;
   text-align: center;
   background-color: transparent;
   border: 1px solid rgba(225, 225, 225, 0);
