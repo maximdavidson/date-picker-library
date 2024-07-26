@@ -9,7 +9,7 @@ import {
 import { ErrorBoundary } from '../ErrorBoundary';
 import PrevImg from 'assets/Prev.png';
 import NextImg from 'assets/Next.png';
-import { CALENDAR_TYPES } from 'constants/calendarTipes';
+import { CALENDAR_TYPES } from 'constants/calendarTypes';
 import { MonthTitle } from './MonthTitle';
 import { MonthPicker } from './MonthPicker';
 import { YearPicker } from './YearPicker';
@@ -19,6 +19,10 @@ export type CalendarProps = {
   isMondayFirst?: boolean;
   isWeekendDate?: (date: Date) => boolean;
   isHolidayDate?: (date: Date) => boolean;
+  //-
+  selectedRange?: { start: Date | null; end: Date | null };
+  onDateSelect?: (date: Date) => void;
+  //-
 };
 
 export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
@@ -27,6 +31,10 @@ export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
     isMondayFirst,
     isWeekendDate,
     isHolidayDate,
+    //-
+    selectedRange,
+    onDateSelect,
+    //-
   } = props;
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -109,6 +117,10 @@ export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
             isMondayFirst={isMondayFirst}
             type={type}
             currentDate={currentDate}
+            //-
+            selectedRange={selectedRange}
+            onDateSelect={onDateSelect}
+            //-
           />
         )}
       </CalendarContainer>
