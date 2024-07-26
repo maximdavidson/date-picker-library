@@ -9,8 +9,10 @@ import {
 import { ErrorBoundary } from '../ErrorBoundary';
 import PrevImg from 'assets/Prev.png';
 import NextImg from 'assets/Next.png';
-import { MonthTitle } from './MonthTitle';
 import { CALENDAR_TYPES } from 'constants/calendarTipes';
+import { MonthTitle } from './MonthTitle';
+import { MonthPicker } from './MonthPicker';
+import { YearPicker } from './YearPicker';
 
 export type CalendarProps = {
   type?: 'Month' | 'Week';
@@ -28,6 +30,7 @@ export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
   } = props;
 
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [mode, setMode] = useState<'date' | 'month' | 'year'>('date');
 
   const handlePrevMonth = () => {
     setCurrentDate((prev) => {
@@ -43,27 +46,71 @@ export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
     });
   };
 
+  const handleMonthTitleClick = () => {
+    setMode('month');
+  };
+
+  const handleYearClick = () => {
+    setMode('year');
+  };
+
+  const handleMonthSelect = (month: number) => {
+    const newDate = new Date(currentDate.getFullYear(), month, 1);
+    setCurrentDate(newDate);
+    setMode('date');
+  };
+
+  const handleYearSelect = (year: number) => {
+    const newDate = new Date(year, currentDate.getMonth(), 1);
+    setCurrentDate(newDate);
+    setMode('date');
+  };
+
   return (
     <ErrorBoundary>
       <CalendarContainer>
         <HeaderContainer>
-          <ArrowButtonPrev
-            onClick={handlePrevMonth}
-            src={PrevImg}
-            alt="Previous Month"
-          />
-          <MonthTitle currentDate={currentDate} />
-          <ArrowButtonNext
-            onClick={handleNextMonth}
-            src={NextImg}
-            alt="Next Month"
-          />
+          {mode === 'date' && (
+            <ArrowButtonPrev
+              onClick={handlePrevMonth}
+              src={PrevImg}
+              alt="Previous Month"
+            />
+          )}
+          {mode === 'date' && (
+            <MonthTitle
+              currentDate={currentDate}
+              onMonthTitleClick={handleMonthTitleClick}
+              onYearClick={handleYearClick}
+            />
+          )}
+          {mode === 'month' && (
+            <MonthPicker
+              currentMonth={currentDate.getMonth()}
+              onMonthSelect={handleMonthSelect}
+            />
+          )}
+          {mode === 'year' && (
+            <YearPicker
+              currentYear={currentDate.getFullYear()}
+              onYearSelect={handleYearSelect}
+            />
+          )}
+          {mode === 'date' && (
+            <ArrowButtonNext
+              onClick={handleNextMonth}
+              src={NextImg}
+              alt="Next Month"
+            />
+          )}
         </HeaderContainer>
-        <GridSlider
-          isMondayFirst={isMondayFirst}
-          type={type}
-          currentDate={currentDate}
-        />
+        {mode === 'date' && (
+          <GridSlider
+            isMondayFirst={isMondayFirst}
+            type={type}
+            currentDate={currentDate}
+          />
+        )}
       </CalendarContainer>
     </ErrorBoundary>
   );
