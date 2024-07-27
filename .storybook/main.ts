@@ -22,7 +22,6 @@ const config: StorybookConfig = {
       config.resolve.alias = {};
     }
 
-    // Настройка алиасов
     config.resolve.alias = {
       ...config.resolve.alias,
       assets: path.resolve(__dirname, '../src/assets'),

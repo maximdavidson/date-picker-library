@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CalendarProps } from 'components/Calendar';
+import { Button } from 'components/DateRangePicker/CleanRangeButton';
 
 export const withRange = (Component: React.FC<CalendarProps>) => {
   return (props: CalendarProps) => {
@@ -31,7 +32,7 @@ export const withRange = (Component: React.FC<CalendarProps>) => {
           selectedRange={range}
           onDateSelect={handleDateSelect}
         />
-        <button onClick={handleClearRange}>Clear Range</button>
+        <Button onClick={handleClearRange} />
       </div>
     );
   };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import { GridSlider } from './GridSlider';
 import {
   CalendarContainer,
@@ -9,70 +9,61 @@ import {
 import { ErrorBoundary } from '../ErrorBoundary';
 import PrevImg from 'assets/Prev.png';
 import NextImg from 'assets/Next.png';
-import { CALENDAR_TYPES } from 'constants/calendarTypes';
 import { MonthTitle } from './MonthTitle';
 import { MonthPicker } from './MonthPicker';
 import { YearPicker } from './YearPicker';
 
 export type CalendarProps = {
-  type?: 'Month' | 'Week';
   isMondayFirst?: boolean;
   isWeekendDate?: (date: Date) => boolean;
   isHolidayDate?: (date: Date) => boolean;
-  //-
   selectedRange?: { start: Date | null; end: Date | null };
   onDateSelect?: (date: Date) => void;
-  //-
 };
 
-export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
+export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
   const {
-    type = CALENDAR_TYPES.Month,
     isMondayFirst,
     isWeekendDate,
     isHolidayDate,
-    //-
     selectedRange,
     onDateSelect,
-    //-
   } = props;
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState<'date' | 'month' | 'year'>('date');
 
-  const handlePrevMonth = () => {
-    setCurrentDate((prev) => {
-      const newDate = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
-      return newDate;
-    });
-  };
+  const handlePrevMonth = useCallback(() => {
+    setCurrentDate(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1),
+    );
+  }, []);
 
-  const handleNextMonth = () => {
-    setCurrentDate((prev) => {
-      const newDate = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
-      return newDate;
-    });
-  };
+  const handleNextMonth = useCallback(() => {
+    setCurrentDate(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1),
+    );
+  }, []);
 
-  const handleMonthTitleClick = () => {
-    setMode('month');
-  };
+  const handleModeChange = useCallback((newMode: 'date' | 'month' | 'year') => {
+    setMode(newMode);
+  }, []);
 
-  const handleYearClick = () => {
-    setMode('year');
-  };
+  const handleMonthSelect = useCallback(
+    (month: number) => {
+      setCurrentDate((prev) => new Date(prev.getFullYear(), month, 1));
+      handleModeChange('date');
+    },
+    [handleModeChange],
+  );
 
-  const handleMonthSelect = (month: number) => {
-    const newDate = new Date(currentDate.getFullYear(), month, 1);
-    setCurrentDate(newDate);
-    setMode('date');
-  };
-
-  const handleYearSelect = (year: number) => {
-    const newDate = new Date(year, currentDate.getMonth(), 1);
-    setCurrentDate(newDate);
-    setMode('date');
-  };
+  const handleYearSelect = useCallback(
+    (year: number) => {
+      setCurrentDate((prev) => new Date(year, prev.getMonth(), 1));
+      handleModeChange('date');
+    },
+    [handleModeChange],
+  );
 
   return (
     <ErrorBoundary>
@@ -88,8 +79,8 @@ export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
           {mode === 'date' && (
             <MonthTitle
               currentDate={currentDate}
-              onMonthTitleClick={handleMonthTitleClick}
-              onYearClick={handleYearClick}
+              onMonthTitleClick={() => handleModeChange('month')}
+              onYearClick={() => handleModeChange('year')}
             />
           )}
           {mode === 'month' && (
@@ -115,12 +106,9 @@ export const Calendar: React.FC<CalendarProps> = (props: CalendarProps) => {
         {mode === 'date' && (
           <GridSlider
             isMondayFirst={isMondayFirst}
-            type={type}
             currentDate={currentDate}
-            //-
             selectedRange={selectedRange}
             onDateSelect={onDateSelect}
-            //-
           />
         )}
       </CalendarContainer>

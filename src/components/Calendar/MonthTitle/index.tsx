@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Title, Month, Year } from './styled';
 import { MONTHS } from 'constants/months';
 
@@ -8,7 +8,7 @@ type MonthTitleProps = {
   onYearClick: () => void;
 };
 
-export const MonthTitle: React.FC<MonthTitleProps> = ({
+export const MonthTitle: FC<MonthTitleProps> = ({
   currentDate,
   onMonthTitleClick,
   onYearClick,

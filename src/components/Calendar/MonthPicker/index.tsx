@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { SHORT_MONTHS } from 'constants/shortMonth';
 import { PickerContainer, PickerItem } from './styled';
 
@@ -7,7 +7,7 @@ type MonthPickerProps = {
   onMonthSelect: (month: number) => void;
 };
 
-export const MonthPicker: React.FC<MonthPickerProps> = ({
+export const MonthPicker: FC<MonthPickerProps> = ({
   currentMonth,
   onMonthSelect,
 }) => {

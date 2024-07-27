@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { PickerContainer, PickerItem } from './styled';
 
 type YearPickerProps = {
@@ -6,7 +6,7 @@ type YearPickerProps = {
   onYearSelect: (year: number) => void;
 };
 
-export const YearPicker: React.FC<YearPickerProps> = ({
+export const YearPicker: FC<YearPickerProps> = ({
   currentYear,
   onYearSelect,
 }) => {

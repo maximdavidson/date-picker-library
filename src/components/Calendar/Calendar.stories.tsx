@@ -2,13 +2,12 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Calendar, CalendarProps } from './index';
 import { DateProvider } from 'providers/DateProviders';
-import { GlobalStyle } from '../../globalStyles';
+import { WithGlobalStyles } from '../../../.storybook/WithGlobalStyles';
 
 export default {
   title: 'Components/Calendar',
   component: Calendar,
   argTypes: {
-    type: { control: 'select', options: ['Month', 'Week'] },
     isMondayFirst: { control: 'boolean' },
     isWeekendDate: { action: 'isWeekendDate' },
     isHolidayDate: { action: 'isHolidayDate' },
@@ -20,7 +19,7 @@ type Story = StoryObj<CalendarProps>;
 const Template: Story = {
   render: (args) => (
     <DateProvider>
-      <GlobalStyle />
+      <WithGlobalStyles />
       <Calendar {...args} />
     </DateProvider>
   ),

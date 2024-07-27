@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { WeekdayLabel } from './styled';
 
 type WeekdayHeaderProps = {
@@ -11,7 +11,7 @@ const getWeekdayLabels = (isMondayFirst: boolean) => {
     : ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 };
 
-export const WeekdayHeader: React.FC<WeekdayHeaderProps> = ({
+export const WeekdayHeader: FC<WeekdayHeaderProps> = ({
   isMondayFirst = false,
 }) => {
   const weekdayLabels = getWeekdayLabels(isMondayFirst);
