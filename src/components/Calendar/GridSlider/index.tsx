@@ -14,7 +14,7 @@ type GridSliderProps = {
 
 const isWeekend = (date: Date, isMondayFirst: boolean) => {
   const day = date.getDay();
-  return isMondayFirst ? day === 5 || day === 6 : day === 0 || day === 6;
+  return isMondayFirst ? day === 6 || day === 0 : day === 0 || day === 6;
 };
 
 const isToday = (date: Date) => {
@@ -57,8 +57,8 @@ export const GridSlider: FC<GridSliderProps> = ({
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
   const days = getDaysInMonth(year, month);
-  const prevMonthDays = getPreviousMonthDays(year, month);
-  const nextMonthDays = getNextMonthDays(year, month, days);
+  const prevMonthDays = getPreviousMonthDays(year, month, isMondayFirst);
+  const nextMonthDays = getNextMonthDays(year, month, days, isMondayFirst);
   const allDays = [...prevMonthDays, ...days, ...nextMonthDays];
 
   return (
