@@ -14,6 +14,7 @@ export const DayBox = styled.div<{
   isSelected?: boolean;
   isStartDate?: boolean;
   isEndDate?: boolean;
+  isHoliday?: boolean;
 }>`
   font-size: 13px;
   padding: 8px;
@@ -34,11 +35,19 @@ export const DayBox = styled.div<{
   &:not([data-today='true']):hover {
     background-color: rgba(241, 241, 241, 1);
   }
-  color: ${({ isToday, isOutsideMonth, isWeekend, isStartDate, isEndDate }) => {
+  color: ${({
+    isToday,
+    isOutsideMonth,
+    isWeekend,
+    isStartDate,
+    isEndDate,
+    isHoliday,
+  }) => {
     if (isStartDate || isEndDate) return 'rgba(255, 255, 255, 1)';
     if (isToday) return 'rgba(255, 255, 255, 1)';
     if (isOutsideMonth) return 'rgba(170, 170, 170, 1)';
-    if (isWeekend) return 'red';
+    if (isWeekend) return 'rgba(255, 0, 0, 1)';
+    if (isHoliday) return 'rgba(255, 0, 0, 1)';
     return 'inherit';
   }};
   border-radius: ${({ isStartDate, isEndDate, isSelected }) => {

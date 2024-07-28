@@ -22,14 +22,7 @@ export type CalendarProps = {
 };
 
 export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
-  const {
-    isMondayFirst,
-    isWeekendDate,
-    isHolidayDate,
-    selectedRange,
-    onDateSelect,
-  } = props;
-
+  const { isMondayFirst, isHolidayDate, selectedRange, onDateSelect } = props;
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState<'date' | 'month' | 'year'>('date');
 
@@ -109,6 +102,7 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
             currentDate={currentDate}
             selectedRange={selectedRange}
             onDateSelect={onDateSelect}
+            isHolidayDate={isHolidayDate}
           />
         )}
       </CalendarContainer>
