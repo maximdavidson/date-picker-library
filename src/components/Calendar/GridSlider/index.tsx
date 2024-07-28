@@ -1,52 +1,26 @@
 import React, { FC } from 'react';
-import { DaysContainer, DayBox } from './styled';
+import { DaysContainer, DayBox, HolidayNameContainer } from './styled';
 import { WeekdayHeader } from '../WeekdaysHeader';
 import { getPreviousMonthDays } from 'utils/getPreviousMonthDays';
 import { getNextMonthDays } from 'utils/getNextMonthDays';
 import { getDaysInMonth } from 'utils/getDaysInMonth';
+import { useHoliday } from 'hooks/useHoliday';
+
+import {
+  isWeekend,
+  isToday,
+  isDateInRange,
+  isStartDate,
+  isEndDate,
+} from 'utils/dateUtils';
 
 type GridSliderProps = {
   isMondayFirst?: boolean;
   currentDate: Date;
   selectedRange?: { start: Date | null; end: Date | null };
-  onDateSelect?: (date: Date) => void;
-  isHolidayDate?: (date: Date) => boolean;
-};
-
-const isWeekend = (date: Date, isMondayFirst: boolean) => {
-  const day = date.getDay();
-  return isMondayFirst ? day === 6 || day === 0 : day === 0 || day === 6;
-};
-
-const isToday = (date: Date) => {
-  const today = new Date();
-  return (
-    date.getDate() === today.getDate() &&
-    date.getMonth() === today.getMonth() &&
-    date.getFullYear() === today.getFullYear()
-  );
-};
-
-const isDateInRange = (
-  date: Date,
-  range: { start: Date | null; end: Date | null },
-) => {
-  if (!range.start || !range.end) return false;
-  return date >= range.start && date <= range.end;
-};
-
-const isStartDate = (
-  date: Date,
-  range: { start: Date | null; end: Date | null },
-) => {
-  return range.start ? date.getTime() === range.start.getTime() : false;
-};
-
-const isEndDate = (
-  date: Date,
-  range: { start: Date | null; end: Date | null },
-) => {
-  return range.end ? date.getTime() === range.end.getTime() : false;
+  onDateSelect: (date: Date) => void;
+  isHolidayDate: (date: Date) => boolean;
+  getHolidayName: (date: Date) => string | null;
 };
 
 export const GridSlider: FC<GridSliderProps> = ({
@@ -55,6 +29,7 @@ export const GridSlider: FC<GridSliderProps> = ({
   selectedRange = { start: null, end: null },
   onDateSelect,
   isHolidayDate,
+  getHolidayName,
 }) => {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -63,25 +38,40 @@ export const GridSlider: FC<GridSliderProps> = ({
   const nextMonthDays = getNextMonthDays(year, month, days, isMondayFirst);
   const allDays = [...prevMonthDays, ...days, ...nextMonthDays];
 
+  const { clickedHoliday, handleDayClick } = useHoliday(
+    isHolidayDate,
+    getHolidayName,
+  );
+
   return (
-    <DaysContainer>
-      <WeekdayHeader isMondayFirst={isMondayFirst} />
-      {allDays.map((day) => (
-        <DayBox
-          key={day.toISOString()}
-          isOutsideMonth={day.getMonth() !== month}
-          isWeekend={isWeekend(day, isMondayFirst)}
-          isToday={isToday(day)}
-          isSelected={isDateInRange(day, selectedRange)}
-          isStartDate={isStartDate(day, selectedRange)}
-          isEndDate={isEndDate(day, selectedRange)}
-          isHoliday={isHolidayDate && isHolidayDate(day)}
-          data-today={isToday(day) ? 'true' : undefined}
-          onClick={() => onDateSelect && onDateSelect(day)}
-        >
-          {day.getDate()}
-        </DayBox>
-      ))}
-    </DaysContainer>
+    <div>
+      <DaysContainer>
+        <WeekdayHeader isMondayFirst={isMondayFirst} />
+        {allDays.map((day) => (
+          <DayBox
+            key={day.toISOString()}
+            isOutsideMonth={day.getMonth() !== month}
+            isWeekend={isWeekend(day, isMondayFirst)}
+            isToday={isToday(day)}
+            isSelected={isDateInRange(day, selectedRange)}
+            isStartDate={isStartDate(day, selectedRange)}
+            isEndDate={isEndDate(day, selectedRange)}
+            isHoliday={isHolidayDate && isHolidayDate(day)}
+            data-today={isToday(day) ? 'true' : undefined}
+            onClick={() => {
+              handleDayClick(day);
+              if (onDateSelect) {
+                onDateSelect(day);
+              }
+            }}
+          >
+            {day.getDate()}
+          </DayBox>
+        ))}
+      </DaysContainer>
+      {clickedHoliday.name && (
+        <HolidayNameContainer>{clickedHoliday.name}</HolidayNameContainer>
+      )}
+    </div>
   );
 };

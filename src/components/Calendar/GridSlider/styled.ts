@@ -24,6 +24,7 @@ export const DayBox = styled.div<{
   align-items: center;
   justify-content: center;
   text-align: center;
+  position: relative;
   background-color: ${({ isToday, isSelected, isStartDate, isEndDate }) => {
     if (isStartDate) return 'rgba(47, 128, 237, 0.6)';
     if (isEndDate) return 'rgba(47, 128, 237, 1)';
@@ -56,4 +57,19 @@ export const DayBox = styled.div<{
     if (isSelected) return '0';
     return '8px';
   }};
+`;
+
+export const HolidayNameContainer = styled.div`
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  bottom: 0px: 
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgba(234, 119, 104, 1);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 1);
 `;

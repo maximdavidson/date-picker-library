@@ -12,7 +12,6 @@ export const HOLIDAY: Holiday[] = [
   { name: 'International Labor Day', month: 4, day: 1 },
   { name: 'Commemoration Day', month: 4, day: 3 },
   { name: 'Victory Day', month: 4, day: 9 },
-  { name: 'June Solstice', month: 5, day: 21 },
   { name: 'Independence Day', month: 6, day: 3 },
   { name: "Mother's Day", month: 9, day: 14 },
   { name: 'October Revolution Day', month: 10, day: 7 },

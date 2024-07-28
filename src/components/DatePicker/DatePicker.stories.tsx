@@ -13,6 +13,10 @@ export default meta;
 type Story = StoryObj<typeof DatePicker>;
 
 export const WithHolidays: Story = {
+  args: {
+    isMondayFirst: true,
+  },
+
   render: (args) => (
     <WithGlobalStyles>
       <DatePicker {...args} withHolidays={true} />

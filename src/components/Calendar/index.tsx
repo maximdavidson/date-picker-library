@@ -14,15 +14,22 @@ import { MonthPicker } from './MonthPicker';
 import { YearPicker } from './YearPicker';
 
 export type CalendarProps = {
-  isMondayFirst?: boolean;
-  isWeekendDate?: (date: Date) => boolean;
-  isHolidayDate?: (date: Date) => boolean;
-  selectedRange?: { start: Date | null; end: Date | null };
-  onDateSelect?: (date: Date) => void;
+  isMondayFirst: boolean;
+  isWeekendDate: (date: Date) => boolean;
+  isHolidayDate: (date: Date) => boolean;
+  selectedRange: { start: Date | null; end: Date | null };
+  onDateSelect: (date: Date) => void;
+  getHolidayName: (date: Date) => string | null;
 };
 
 export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
-  const { isMondayFirst, isHolidayDate, selectedRange, onDateSelect } = props;
+  const {
+    isMondayFirst,
+    isHolidayDate,
+    selectedRange,
+    onDateSelect,
+    getHolidayName,
+  } = props;
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState<'date' | 'month' | 'year'>('date');
 
@@ -103,6 +110,7 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
             selectedRange={selectedRange}
             onDateSelect={onDateSelect}
             isHolidayDate={isHolidayDate}
+            getHolidayName={getHolidayName}
           />
         )}
       </CalendarContainer>
