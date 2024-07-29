@@ -10,11 +10,12 @@ export const DaysContainer = styled.div`
 export const DayBox = styled.div<{
   isOutsideMonth: boolean;
   isWeekend: boolean;
-  isToday?: boolean;
-  isSelected?: boolean;
-  isStartDate?: boolean;
-  isEndDate?: boolean;
-  isHoliday?: boolean;
+  isToday: boolean;
+  isSelected: boolean;
+  isStartDate: boolean;
+  isEndDate: boolean;
+  isHoliday: boolean;
+  isFound: boolean;
 }>`
   font-size: 13px;
   padding: 8px;
@@ -25,10 +26,17 @@ export const DayBox = styled.div<{
   justify-content: center;
   text-align: center;
   position: relative;
-  background-color: ${({ isToday, isSelected, isStartDate, isEndDate }) => {
+  background-color: ${({
+    isToday,
+    isSelected,
+    isStartDate,
+    isEndDate,
+    isFound,
+  }) => {
     if (isStartDate) return 'rgba(47, 128, 237, 0.6)';
     if (isEndDate) return 'rgba(47, 128, 237, 1)';
     if (isSelected) return 'rgba(47, 128, 237, 0.1)';
+    if (isFound) return 'rgba(47, 128, 237, 0.6)';
     return isToday ? 'rgba(47, 128, 237, 1)' : 'transparent';
   }};
   border: 1px solid rgba(225, 225, 225, 0);
@@ -43,25 +51,28 @@ export const DayBox = styled.div<{
     isStartDate,
     isEndDate,
     isHoliday,
+    isFound,
   }) => {
     if (isStartDate || isEndDate) return 'rgba(255, 255, 255, 1)';
     if (isToday) return 'rgba(255, 255, 255, 1)';
     if (isOutsideMonth) return 'rgba(170, 170, 170, 1)';
     if (isWeekend) return 'rgba(255, 0, 0, 1)';
     if (isHoliday) return 'rgba(255, 0, 0, 1)';
+    if (isFound) return 'rgba(255, 255, 255, 1)';
     return 'inherit';
   }};
-  border-radius: ${({ isStartDate, isEndDate, isSelected }) => {
+  border-radius: ${({ isStartDate, isEndDate, isSelected, isFound }) => {
     if (isStartDate) return '8px 0px 0px 8px';
     if (isEndDate) return '0px 8px 8px 0px';
     if (isSelected) return '0';
+    if (isFound) return '8px';
     return '8px';
   }};
 `;
 
 export const HolidayNameContainer = styled.div`
   position: absolute;
-  top: 50px;
+  top: 90px;
   left: 50px;
   bottom: 0px: 
   margin-top: 10px;

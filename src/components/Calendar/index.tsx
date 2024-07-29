@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import React, { FC, useState, useCallback, useEffect } from 'react';
 import { GridSlider } from './GridSlider';
 import {
   CalendarContainer,
@@ -20,6 +20,7 @@ export type CalendarProps = {
   selectedRange: { start: Date | null; end: Date | null };
   onDateSelect: (date: Date) => void;
   getHolidayName: (date: Date) => string | null;
+  foundedDate: Date | null;
 };
 
 export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
@@ -29,9 +30,16 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
     selectedRange,
     onDateSelect,
     getHolidayName,
+    foundedDate,
   } = props;
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState<'date' | 'month' | 'year'>('date');
+
+  useEffect(() => {
+    if (foundedDate) {
+      setCurrentDate(foundedDate);
+    }
+  }, [foundedDate]);
 
   const handlePrevMonth = useCallback(() => {
     setCurrentDate(
@@ -111,6 +119,7 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
             onDateSelect={onDateSelect}
             isHolidayDate={isHolidayDate}
             getHolidayName={getHolidayName}
+            foundedDate={foundedDate}
           />
         )}
       </CalendarContainer>

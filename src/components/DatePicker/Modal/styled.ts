@@ -29,7 +29,7 @@ export const Input = styled.input<InputProps>`
   font-size: 15px;
   font-weight: 400;
   color: ${({ isValid }) =>
-    isValid ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 0, 0, 1)'};
+    isValid ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 0, 0, 0.6)'};
   width: 100%;
   cursor: pointer;
 `;

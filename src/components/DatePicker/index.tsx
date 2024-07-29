@@ -52,10 +52,14 @@ export const DatePicker: FC<DatePickerProps> = ({
 
   const handleClear = () => {
     setDate('');
-    setIsCalendarVisible(false);
+    setIsCalendarVisible(true);
     setPlaceholder('Choose Date');
     setIsDateValid(false);
   };
+
+  const parsedDate = isValidDate(date)
+    ? new Date(date.split('/').reverse().join('-'))
+    : null;
 
   return (
     <div>
@@ -71,9 +75,9 @@ export const DatePicker: FC<DatePickerProps> = ({
       />
       {isCalendarVisible &&
         (withHolidays ? (
-          <CalendarWithHolidays {...props} />
+          <CalendarWithHolidays {...props} foundedDate={parsedDate} />
         ) : (
-          <Calendar {...props} />
+          <Calendar {...props} foundedDate={parsedDate} />
         ))}
     </div>
   );

@@ -17,10 +17,11 @@ import {
 type GridSliderProps = {
   isMondayFirst?: boolean;
   currentDate: Date;
-  selectedRange?: { start: Date | null; end: Date | null };
+  selectedRange: { start: Date | null; end: Date | null };
   onDateSelect: (date: Date) => void;
   isHolidayDate: (date: Date) => boolean;
   getHolidayName: (date: Date) => string | null;
+  foundedDate: Date | null;
 };
 
 export const GridSlider: FC<GridSliderProps> = ({
@@ -30,6 +31,7 @@ export const GridSlider: FC<GridSliderProps> = ({
   onDateSelect,
   isHolidayDate,
   getHolidayName,
+  foundedDate,
 }) => {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -54,6 +56,7 @@ export const GridSlider: FC<GridSliderProps> = ({
             isWeekend={isWeekend(day, isMondayFirst)}
             isToday={isToday(day)}
             isSelected={isDateInRange(day, selectedRange)}
+            isFound={foundedDate?.toDateString() === day.toDateString()}
             isStartDate={isStartDate(day, selectedRange)}
             isEndDate={isEndDate(day, selectedRange)}
             isHoliday={isHolidayDate && isHolidayDate(day)}
