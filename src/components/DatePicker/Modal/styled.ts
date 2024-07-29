@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface InputProps {
+  isValid: boolean;
+}
+
 export const ModalWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -19,12 +23,13 @@ export const CalendarIcon = styled.img`
   height: 16px;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<InputProps>`
   border: none;
   outline: none;
   font-size: 15px;
   font-weight: 400;
-  color: rgba(187, 187, 187, 1);
+  color: ${({ isValid }) =>
+    isValid ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 0, 0, 1)'};
   width: 100%;
   cursor: pointer;
 `;
