@@ -5,7 +5,6 @@ import { getPreviousMonthDays } from 'utils/getPreviousMonthDays';
 import { getNextMonthDays } from 'utils/getNextMonthDays';
 import { getDaysInMonth } from 'utils/getDaysInMonth';
 import { useHoliday } from 'hooks/useHoliday';
-
 import {
   isWeekend,
   isToday,
@@ -14,6 +13,7 @@ import {
   isEndDate,
 } from 'utils/dateUtils';
 import { TodoManager } from 'components/DatePicker/TodoManager';
+import useLocalStorage from 'hooks/useLocalStorage';
 
 type GridSliderProps = {
   isMondayFirst?: boolean;
@@ -43,6 +43,10 @@ export const GridSlider: FC<GridSliderProps> = ({
   const nextMonthDays = getNextMonthDays(year, month, days, isMondayFirst);
   const allDays = [...prevMonthDays, ...days, ...nextMonthDays];
   const [pressedDate, setPressedDate] = useState<Date | null>(null);
+  const [todos, setTodos] = useLocalStorage<{ [key: string]: string[] }>(
+    'todos',
+    {},
+  );
 
   const { clickedHoliday, handleDayClick } = useHoliday(
     isHolidayDate,
@@ -57,6 +61,11 @@ export const GridSlider: FC<GridSliderProps> = ({
 
   const handleCloseTodoManager = () => {
     setPressedDate(null);
+  };
+
+  const hasTodo = (date: Date) => {
+    const dateKey = date.toDateString();
+    return todos[dateKey] && todos[dateKey].length > 0;
   };
 
   return (
@@ -74,6 +83,7 @@ export const GridSlider: FC<GridSliderProps> = ({
             isStartDate={isStartDate(day, selectedRange)}
             isEndDate={isEndDate(day, selectedRange)}
             isHoliday={isHolidayDate && isHolidayDate(day)}
+            hasTodo={hasTodo(day)}
             data-today={isToday(day) ? 'true' : undefined}
             onClick={() => {
               handleDayClick(day);

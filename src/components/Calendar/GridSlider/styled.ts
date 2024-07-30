@@ -16,6 +16,7 @@ export const DayBox = styled.div<{
   isEndDate: boolean;
   isHoliday: boolean;
   isFound: boolean;
+  hasTodo: boolean;
 }>`
   font-size: 13px;
   padding: 8px;
@@ -52,7 +53,9 @@ export const DayBox = styled.div<{
     isEndDate,
     isHoliday,
     isFound,
+    hasTodo,
   }) => {
+    if (hasTodo) return 'rgba(230, 188, 19, 1)';
     if (isStartDate || isEndDate) return 'rgba(255, 255, 255, 1)';
     if (isToday) return 'rgba(255, 255, 255, 1)';
     if (isOutsideMonth) return 'rgba(170, 170, 170, 1)';
