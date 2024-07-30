@@ -1,5 +1,6 @@
 import React from 'react';
-import { Calendar, CalendarProps } from '../Calendar';
+import { Calendar } from '../Calendar';
+import { CalendarProps } from '../Calendar/types';
 import { withRange } from 'decorators/withRange';
 
 type DateRangePickerProps = CalendarProps;

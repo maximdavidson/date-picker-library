@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FC, KeyboardEvent } from 'react';
-import { Calendar, CalendarProps } from '../Calendar';
+import { Calendar } from '../Calendar';
+import { CalendarProps } from '../Calendar/types';
 import { withHolidays } from 'decorators/withHolidays';
 import { Modal } from './Modal';
 

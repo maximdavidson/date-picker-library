@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { CalendarProps } from 'components/Calendar';
+import { CalendarProps } from 'components/Calendar/types';
 import { generateHolidays } from 'utils/generateHolidays';
 import { getHolidayName } from 'utils/getHolidayName';
 

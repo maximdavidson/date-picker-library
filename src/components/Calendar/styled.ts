@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CalendarContainer = styled.div`
+export const CalendarContainer = styled.main`
   width: 255px;
   height: 281px;
   border-radius: 8px;

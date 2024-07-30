@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CalendarProps } from 'components/Calendar';
+import { CalendarProps } from 'components/Calendar/types';
 import { Button } from 'components/DateRangePicker/CleanRangeButton';
 
 export const withRange = (Component: React.FC<CalendarProps>) => {

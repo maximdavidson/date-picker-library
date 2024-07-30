@@ -12,19 +12,9 @@ import NextImg from 'assets/Next.png';
 import { MonthTitle } from './MonthTitle';
 import { MonthPicker } from './MonthPicker';
 import { YearPicker } from './YearPicker';
+import { CalendarProps } from './types';
 
-export type CalendarProps = {
-  isMondayFirst: boolean;
-  isWeekendDate: (date: Date) => boolean;
-  isHolidayDate: (date: Date) => boolean;
-  selectedRange: { start: Date | null; end: Date | null };
-  onDateSelect: (date: Date) => void;
-  getHolidayName: (date: Date) => string | null;
-  foundedDate: Date | null;
-  showTodo?: boolean;
-};
-
-export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
+export const Calendar: FC<CalendarProps> = (props) => {
   const {
     isMondayFirst,
     isHolidayDate,
@@ -34,6 +24,7 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
     foundedDate,
     showTodo = false,
   } = props;
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState<'date' | 'month' | 'year'>('date');
 
@@ -80,18 +71,23 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
       <CalendarContainer>
         <HeaderContainer>
           {mode === 'date' && (
-            <ArrowButtonPrev
-              onClick={handlePrevMonth}
-              src={PrevImg}
-              alt="Previous Month"
-            />
-          )}
-          {mode === 'date' && (
-            <MonthTitle
-              currentDate={currentDate}
-              onMonthTitleClick={() => handleModeChange('month')}
-              onYearClick={() => handleModeChange('year')}
-            />
+            <>
+              <ArrowButtonPrev
+                onClick={handlePrevMonth}
+                src={PrevImg}
+                alt="Previous Month"
+              />
+              <MonthTitle
+                currentDate={currentDate}
+                onMonthTitleClick={() => handleModeChange('month')}
+                onYearClick={() => handleModeChange('year')}
+              />
+              <ArrowButtonNext
+                onClick={handleNextMonth}
+                src={NextImg}
+                alt="Next Month"
+              />
+            </>
           )}
           {mode === 'month' && (
             <MonthPicker
@@ -103,13 +99,6 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
             <YearPicker
               currentYear={currentDate.getFullYear()}
               onYearSelect={handleYearSelect}
-            />
-          )}
-          {mode === 'date' && (
-            <ArrowButtonNext
-              onClick={handleNextMonth}
-              src={NextImg}
-              alt="Next Month"
             />
           )}
         </HeaderContainer>
