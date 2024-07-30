@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { DaysContainer, DayBox, HolidayNameContainer } from './styled';
 import { WeekdayHeader } from '../WeekdaysHeader';
 import { getPreviousMonthDays } from 'utils/getPreviousMonthDays';
@@ -13,6 +13,7 @@ import {
   isStartDate,
   isEndDate,
 } from 'utils/dateUtils';
+import { TodoManager } from 'components/DatePicker/TodoManager';
 
 type GridSliderProps = {
   isMondayFirst?: boolean;
@@ -22,6 +23,7 @@ type GridSliderProps = {
   isHolidayDate: (date: Date) => boolean;
   getHolidayName: (date: Date) => string | null;
   foundedDate: Date | null;
+  showTodo: boolean;
 };
 
 export const GridSlider: FC<GridSliderProps> = ({
@@ -32,6 +34,7 @@ export const GridSlider: FC<GridSliderProps> = ({
   isHolidayDate,
   getHolidayName,
   foundedDate,
+  showTodo = false,
 }) => {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -39,11 +42,22 @@ export const GridSlider: FC<GridSliderProps> = ({
   const prevMonthDays = getPreviousMonthDays(year, month, isMondayFirst);
   const nextMonthDays = getNextMonthDays(year, month, days, isMondayFirst);
   const allDays = [...prevMonthDays, ...days, ...nextMonthDays];
+  const [pressedDate, setPressedDate] = useState<Date | null>(null);
 
   const { clickedHoliday, handleDayClick } = useHoliday(
     isHolidayDate,
     getHolidayName,
   );
+
+  const handleDoubleClick = (date: Date) => {
+    if (showTodo) {
+      setPressedDate(date);
+    }
+  };
+
+  const handleCloseTodoManager = () => {
+    setPressedDate(null);
+  };
 
   return (
     <div>
@@ -67,6 +81,7 @@ export const GridSlider: FC<GridSliderProps> = ({
                 onDateSelect(day);
               }
             }}
+            onDoubleClick={() => handleDoubleClick(day)}
           >
             {day.getDate()}
           </DayBox>
@@ -74,6 +89,12 @@ export const GridSlider: FC<GridSliderProps> = ({
       </DaysContainer>
       {clickedHoliday.name && (
         <HolidayNameContainer>{clickedHoliday.name}</HolidayNameContainer>
+      )}
+      {showTodo && pressedDate && (
+        <TodoManager
+          pressedDate={pressedDate}
+          onClose={handleCloseTodoManager}
+        />
       )}
     </div>
   );

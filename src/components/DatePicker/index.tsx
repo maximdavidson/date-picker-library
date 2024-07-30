@@ -75,9 +75,13 @@ export const DatePicker: FC<DatePickerProps> = ({
       />
       {isCalendarVisible &&
         (withHolidays ? (
-          <CalendarWithHolidays {...props} foundedDate={parsedDate} />
+          <CalendarWithHolidays
+            {...props}
+            foundedDate={parsedDate}
+            showTodo={true}
+          />
         ) : (
-          <Calendar {...props} foundedDate={parsedDate} />
+          <Calendar {...props} foundedDate={parsedDate} showTodo={true} />
         ))}
     </div>
   );

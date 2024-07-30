@@ -21,6 +21,7 @@ export type CalendarProps = {
   onDateSelect: (date: Date) => void;
   getHolidayName: (date: Date) => string | null;
   foundedDate: Date | null;
+  showTodo?: boolean;
 };
 
 export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
@@ -31,6 +32,7 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
     onDateSelect,
     getHolidayName,
     foundedDate,
+    showTodo = false,
   } = props;
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState<'date' | 'month' | 'year'>('date');
@@ -120,6 +122,7 @@ export const Calendar: FC<CalendarProps> = (props: CalendarProps) => {
             isHolidayDate={isHolidayDate}
             getHolidayName={getHolidayName}
             foundedDate={foundedDate}
+            showTodo={showTodo}
           />
         )}
       </CalendarContainer>
