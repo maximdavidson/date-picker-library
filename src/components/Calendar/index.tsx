@@ -23,6 +23,8 @@ export const Calendar: FC<CalendarProps> = (props) => {
     getHolidayName,
     foundedDate,
     showTodo = false,
+    weekendColor = 'rgba(255, 0, 0, 1)',
+    holidayColor = 'rgba(255, 0, 0, 1)',
   } = props;
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -112,6 +114,8 @@ export const Calendar: FC<CalendarProps> = (props) => {
             getHolidayName={getHolidayName}
             foundedDate={foundedDate}
             showTodo={showTodo}
+            weekendColor={weekendColor}
+            holidayColor={holidayColor}
           />
         )}
       </CalendarContainer>

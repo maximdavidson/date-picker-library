@@ -1,3 +1,5 @@
+// В файл styled.ts
+
 import styled from 'styled-components';
 
 export const DaysContainer = styled.div`
@@ -17,6 +19,8 @@ export const DayBox = styled.div<{
   isHoliday: boolean;
   isFound: boolean;
   hasTodo: boolean;
+  weekendColor: string;
+  holidayColor: string;
 }>`
   font-size: 13px;
   padding: 8px;
@@ -54,13 +58,15 @@ export const DayBox = styled.div<{
     isHoliday,
     isFound,
     hasTodo,
+    weekendColor,
+    holidayColor,
   }) => {
     if (hasTodo) return 'rgba(230, 188, 19, 1)';
     if (isStartDate || isEndDate) return 'rgba(255, 255, 255, 1)';
     if (isToday) return 'rgba(255, 255, 255, 1)';
     if (isOutsideMonth) return 'rgba(170, 170, 170, 1)';
-    if (isWeekend) return 'rgba(255, 0, 0, 1)';
-    if (isHoliday) return 'rgba(255, 0, 0, 1)';
+    if (isWeekend) return weekendColor;
+    if (isHoliday) return holidayColor;
     if (isFound) return 'rgba(255, 255, 255, 1)';
     return 'inherit';
   }};
@@ -77,7 +83,6 @@ export const HolidayNameContainer = styled.div`
   position: absolute;
   top: 90px;
   left: 50px;
-  bottom: 0px: 
   margin-top: 10px;
   padding: 10px;
   background-color: rgba(234, 119, 104, 1);

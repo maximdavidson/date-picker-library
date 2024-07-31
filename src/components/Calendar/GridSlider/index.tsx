@@ -24,6 +24,8 @@ type GridSliderProps = {
   getHolidayName: (date: Date) => string | null;
   foundedDate: Date | null;
   showTodo: boolean;
+  weekendColor: string;
+  holidayColor: string;
 };
 
 export const GridSlider: FC<GridSliderProps> = ({
@@ -35,6 +37,8 @@ export const GridSlider: FC<GridSliderProps> = ({
   getHolidayName,
   foundedDate,
   showTodo = false,
+  weekendColor,
+  holidayColor,
 }) => {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -92,6 +96,8 @@ export const GridSlider: FC<GridSliderProps> = ({
               }
             }}
             onDoubleClick={() => handleDoubleClick(day)}
+            weekendColor={weekendColor}
+            holidayColor={holidayColor}
           >
             {day.getDate()}
           </DayBox>

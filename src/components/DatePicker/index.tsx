@@ -6,6 +6,8 @@ import { Modal } from './Modal';
 
 type DatePickerProps = CalendarProps & {
   withHolidays?: boolean;
+  weekendColor?: string;
+  holidayColor?: string;
 };
 
 const CalendarWithHolidays = withHolidays(Calendar);
@@ -17,6 +19,8 @@ const isValidDate = (date: string) => {
 
 export const DatePicker: FC<DatePickerProps> = ({
   withHolidays = true,
+  weekendColor = 'rgba(255, 0, 0, 1)',
+  holidayColor = 'rgba(255, 0, 0, 1)',
   ...props
 }) => {
   const [date, setDate] = useState('');
@@ -80,9 +84,17 @@ export const DatePicker: FC<DatePickerProps> = ({
             {...props}
             foundedDate={parsedDate}
             showTodo={true}
+            weekendColor={weekendColor}
+            holidayColor={holidayColor}
           />
         ) : (
-          <Calendar {...props} foundedDate={parsedDate} showTodo={true} />
+          <Calendar
+            {...props}
+            foundedDate={parsedDate}
+            showTodo={true}
+            weekendColor={weekendColor}
+            holidayColor={holidayColor}
+          />
         ))}
     </div>
   );

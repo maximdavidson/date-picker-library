@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { Calendar, CalendarProps } from './index';
+import { Calendar } from './index';
+import { CalendarProps } from './types';
 import { DateProvider } from 'providers/DateProviders';
 import { WithGlobalStyles } from '../../../.storybook/WithGlobalStyles';
 
@@ -11,6 +12,8 @@ export default {
     isMondayFirst: { control: 'boolean' },
     isWeekendDate: { action: 'isWeekendDate' },
     isHolidayDate: { action: 'isHolidayDate' },
+    weekendColor: { control: 'color' },
+    holidayColor: { control: 'color' },
   },
 } as Meta<typeof Calendar>;
 
@@ -29,5 +32,7 @@ export const Default: Story = {
   ...Template,
   args: {
     isMondayFirst: true,
+    weekendColor: 'rgba(255, 0, 0, 1)',
+    holidayColor: 'rgba(255, 0, 0, 1)',
   },
 };

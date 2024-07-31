@@ -11,5 +11,7 @@ export type CalendarProps = {
   onDateSelect: (date: Date) => void;
   getHolidayName: (date: Date) => string | null;
   foundedDate: Date | null;
-  showTodo?: boolean;
+  showTodo: boolean;
+  weekendColor: string;
+  holidayColor: string;
 };
