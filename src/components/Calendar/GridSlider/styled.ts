@@ -1,5 +1,3 @@
-// В файл styled.ts
-
 import styled from 'styled-components';
 
 export const DaysContainer = styled.div`

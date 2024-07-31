@@ -13,10 +13,12 @@ module.exports = {
     '^providers/(.*)$': '<rootDir>/src/providers/$1',
     '^utils/(.*)$': '<rootDir>/src/utils/$1',
     '^constants/(.*)$': '<rootDir>/src/constants/$1',
+    '\\.(jpg|jpeg|png|gif|svg|ico|icon)$': '<rootDir>/__mocks__/fileMock.js',
   },
   testMatch: [
     '**/__tests__/**/*.js',
     '**/__tests__/**/*.ts',
+    '**/__tests__/**/*.tsx',
     '**/?(*.)+(spec|test).[jt]s?(x)',
   ],
 };
