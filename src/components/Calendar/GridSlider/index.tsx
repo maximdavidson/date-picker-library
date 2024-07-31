@@ -87,7 +87,7 @@ export const GridSlider: FC<GridSliderProps> = ({
             isStartDate={isStartDate(day, selectedRange)}
             isEndDate={isEndDate(day, selectedRange)}
             isHoliday={isHolidayDate && isHolidayDate(day)}
-            hasTodo={hasTodo(day)}
+            hasTodo={showTodo && hasTodo(day)}
             data-today={isToday(day) ? 'true' : undefined}
             onClick={() => {
               handleDayClick(day);
