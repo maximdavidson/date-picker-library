@@ -5,39 +5,30 @@ import React, {
   ReactNode,
   Dispatch,
   SetStateAction,
+  FC,
 } from 'react';
 
-interface Range {
-  rangeStart?: Date;
-  rangeEnd?: Date;
-}
-
 interface DateContextType {
-  range: Range;
-  setRange: Dispatch<SetStateAction<Range>>;
-  clearRange: () => void;
+  currentDate: Date;
+  setCurrentDate: Dispatch<SetStateAction<Date>>;
 }
 
 const DateContext = createContext<DateContextType | null>(null);
 
-const DateProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [range, setRange] = useState<Range>({});
-
-  const clearRange = () => setRange({});
+export const DateProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   return (
-    <DateContext.Provider value={{ range, setRange, clearRange }}>
+    <DateContext.Provider value={{ currentDate, setCurrentDate }}>
       {children}
     </DateContext.Provider>
   );
 };
 
-const useDate = (): DateContextType => {
+export const useDate = (): DateContextType => {
   const context = useContext(DateContext);
   if (!context) {
     throw new Error('useDate must be used within a DateProvider');
   }
   return context;
 };
-
-export { DateProvider, useDate };

@@ -30,6 +30,7 @@ export const Modal: FC<ModalProps> = ({
       <Input
         type="text"
         value={value}
+        maxLength={10}
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}

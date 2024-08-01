@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { CalendarProps } from 'components/Calendar/types';
 import { Button } from 'components/DateRangePicker/CleanRangeButton';
 
-export const withRange = (Component: React.FC<CalendarProps>) => {
+export const withRange = (Component: FC<CalendarProps>) => {
   return (props: CalendarProps) => {
     const [range, setRange] = useState<{
       start: Date | null;

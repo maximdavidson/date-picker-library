@@ -68,6 +68,16 @@ export const Calendar: FC<CalendarProps> = (props) => {
     [handleModeChange],
   );
 
+  const handleMonthTitleClick = useCallback(
+    () => handleModeChange('month'),
+    [handleModeChange],
+  );
+
+  const handleYearClick = useCallback(
+    () => handleModeChange('year'),
+    [handleModeChange],
+  );
+
   return (
     <ErrorBoundary>
       <CalendarContainer>
@@ -81,8 +91,8 @@ export const Calendar: FC<CalendarProps> = (props) => {
               />
               <MonthTitle
                 currentDate={currentDate}
-                onMonthTitleClick={() => handleModeChange('month')}
-                onYearClick={() => handleModeChange('year')}
+                onMonthTitleClick={handleMonthTitleClick}
+                onYearClick={handleYearClick}
               />
               <ArrowButtonNext
                 onClick={handleNextMonth}

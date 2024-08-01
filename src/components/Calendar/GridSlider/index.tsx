@@ -57,9 +57,18 @@ export const GridSlider: FC<GridSliderProps> = ({
     getHolidayName,
   );
 
-  const handleDoubleClick = (date: Date) => {
-    if (showTodo) {
-      setPressedDate(date);
+  const handleDayClickInternal = (day: Date) => {
+    if (day.getMonth() === month) {
+      handleDayClick(day);
+      if (onDateSelect) {
+        onDateSelect(day);
+      }
+    }
+  };
+
+  const handleDoubleClickInternal = (day: Date) => {
+    if (showTodo && day.getMonth() === month) {
+      setPressedDate(day);
     }
   };
 
@@ -89,13 +98,8 @@ export const GridSlider: FC<GridSliderProps> = ({
             isHoliday={isHolidayDate && isHolidayDate(day)}
             hasTodo={showTodo && hasTodo(day)}
             data-today={isToday(day) ? 'true' : undefined}
-            onClick={() => {
-              handleDayClick(day);
-              if (onDateSelect) {
-                onDateSelect(day);
-              }
-            }}
-            onDoubleClick={() => handleDoubleClick(day)}
+            onClick={() => handleDayClickInternal(day)}
+            onDoubleClick={() => handleDoubleClickInternal(day)}
             weekendColor={weekendColor}
             holidayColor={holidayColor}
           >

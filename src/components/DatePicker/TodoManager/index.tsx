@@ -49,6 +49,7 @@ export const TodoManager: FC<TodoManagerProps> = ({ pressedDate, onClose }) => {
         value={newTodo}
         onChange={handleTodoChange}
         placeholder="Add a new todo"
+        maxLength={20}
       />
       <Add onClick={handleAddTodo}>&#9998;</Add>
       <Close onClick={onClose}>&#10006;</Close>

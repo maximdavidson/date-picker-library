@@ -3,6 +3,7 @@ import { Calendar } from '../Calendar';
 import { CalendarProps } from '../Calendar/types';
 import { withHolidays } from 'decorators/withHolidays';
 import { Modal } from './Modal';
+import { formatInputDate } from 'utils/formatInputDate';
 
 type DatePickerProps = CalendarProps & {
   withHolidays?: boolean;
@@ -29,7 +30,7 @@ export const DatePicker: FC<DatePickerProps> = ({
   const [isDateValid, setIsDateValid] = useState(false);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
+    const value = formatInputDate(event.target.value);
     setDate(value);
     setIsDateValid(isValidDate(value));
   };
