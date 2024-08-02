@@ -3,12 +3,7 @@ import { Title, Month, Year } from './styled';
 import { MONTHS } from 'constants/months';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'theme/theme';
-
-type MonthTitleProps = {
-  currentDate: Date;
-  onMonthTitleClick: () => void;
-  onYearClick: () => void;
-};
+import { MonthTitleProps } from './types';
 
 export const MonthTitle: FC<MonthTitleProps> = ({
   currentDate,

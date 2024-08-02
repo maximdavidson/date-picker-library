@@ -2,11 +2,7 @@ import React, { FC } from 'react';
 import { PickerContainer, PickerItem } from './styled';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'theme/theme';
-
-type YearPickerProps = {
-  currentYear: number;
-  onYearSelect: (year: number) => void;
-};
+import { YearPickerProps } from './types';
 
 export const YearPicker: FC<YearPickerProps> = ({
   currentYear,

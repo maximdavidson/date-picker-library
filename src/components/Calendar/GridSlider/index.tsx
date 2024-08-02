@@ -16,19 +16,7 @@ import {
 } from 'utils/dateUtils';
 import { TodoManager } from 'components/DatePicker/TodoManager';
 import useLocalStorage from 'hooks/useLocalStorage';
-
-type GridSliderProps = {
-  isMondayFirst?: boolean;
-  currentDate: Date;
-  selectedRange: { start: Date | null; end: Date | null };
-  onDateSelect: (date: Date) => void;
-  isHolidayDate: (date: Date) => boolean;
-  getHolidayName: (date: Date) => string | null;
-  foundedDate: Date | null;
-  showTodo: boolean;
-  weekendColor: string;
-  holidayColor: string;
-};
+import { GridSliderProps } from './types';
 
 export const GridSlider: FC<GridSliderProps> = ({
   isMondayFirst = false,
