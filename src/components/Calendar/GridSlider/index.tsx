@@ -5,6 +5,8 @@ import { getPreviousMonthDays } from 'utils/getPreviousMonthDays';
 import { getNextMonthDays } from 'utils/getNextMonthDays';
 import { getDaysInMonth } from 'utils/getDaysInMonth';
 import { useHoliday } from 'hooks/useHoliday';
+import { ThemeProvider } from 'styled-components';
+import { theme } from 'theme/theme';
 import {
   isWeekend,
   isToday,
@@ -83,39 +85,43 @@ export const GridSlider: FC<GridSliderProps> = ({
 
   return (
     <div>
-      <DaysContainer>
-        <WeekdayHeader isMondayFirst={isMondayFirst} />
-        {allDays.map((day) => (
-          <DayBox
-            key={day.toISOString()}
-            isOutsideMonth={day.getMonth() !== month}
-            isWeekend={isWeekend(day, isMondayFirst)}
-            isToday={isToday(day)}
-            isSelected={isDateInRange(day, selectedRange)}
-            isFound={foundedDate?.toDateString() === day.toDateString()}
-            isStartDate={isStartDate(day, selectedRange)}
-            isEndDate={isEndDate(day, selectedRange)}
-            isHoliday={isHolidayDate && isHolidayDate(day)}
-            hasTodo={showTodo && hasTodo(day)}
-            data-today={isToday(day) ? 'true' : undefined}
-            onClick={() => handleDayClickInternal(day)}
-            onDoubleClick={() => handleDoubleClickInternal(day)}
-            weekendColor={weekendColor}
-            holidayColor={holidayColor}
-          >
-            {day.getDate()}
-          </DayBox>
-        ))}
-      </DaysContainer>
-      {clickedHoliday.name && (
-        <HolidayNameContainer>{clickedHoliday.name}</HolidayNameContainer>
-      )}
-      {showTodo && pressedDate && (
-        <TodoManager
-          pressedDate={pressedDate}
-          onClose={handleCloseTodoManager}
-        />
-      )}
+      <ThemeProvider theme={theme}>
+        <DaysContainer>
+          <WeekdayHeader isMondayFirst={isMondayFirst} />
+          {allDays.map((day) => (
+            <DayBox
+              key={day.toISOString()}
+              isOutsideMonth={day.getMonth() !== month}
+              isWeekend={isWeekend(day, isMondayFirst)}
+              isToday={isToday(day)}
+              isSelected={isDateInRange(day, selectedRange)}
+              isFound={foundedDate?.toDateString() === day.toDateString()}
+              isStartDate={isStartDate(day, selectedRange)}
+              isEndDate={isEndDate(day, selectedRange)}
+              isHoliday={isHolidayDate && isHolidayDate(day)}
+              hasTodo={showTodo && hasTodo(day)}
+              data-today={isToday(day) ? 'true' : undefined}
+              onClick={() => handleDayClickInternal(day)}
+              onDoubleClick={() => handleDoubleClickInternal(day)}
+              weekendColor={weekendColor}
+              holidayColor={holidayColor}
+            >
+              {day.getDate()}
+            </DayBox>
+          ))}
+        </DaysContainer>
+        {clickedHoliday.name && (
+          <HolidayNameContainer>{clickedHoliday.name}</HolidayNameContainer>
+        )}
+        {showTodo && pressedDate && (
+          <TodoManager
+            pressedDate={pressedDate}
+            onClose={handleCloseTodoManager}
+            todos={todos}
+            setTodos={setTodos}
+          />
+        )}
+      </ThemeProvider>
     </div>
   );
 };

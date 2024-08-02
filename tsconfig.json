@@ -23,7 +23,8 @@
       "hooks/*": ["./src/hooks/*"],
       "providers/*": ["./src/providers/*"],
       "utils/*": ["./src/utils/*"],
-      "constants/*": ["./src/constants/*"]
+      "constants/*": ["./src/constants/*"],
+      "theme/*": ["./src/theme/*"]
     }
   }
 }

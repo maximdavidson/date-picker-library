@@ -31,6 +31,7 @@ const config: StorybookConfig = {
       providers: path.resolve(__dirname, '../src/providers'),
       utils: path.resolve(__dirname, '../src/utils'),
       constants: path.resolve(__dirname, '../src/constants'),
+      theme: path.resolve(__dirname, '../src/theme'),
     };
 
     return config;

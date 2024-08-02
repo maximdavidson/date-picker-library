@@ -12,7 +12,7 @@ export const PickerItem = styled.div`
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borderRadius};
 
   &:hover {
     background-color: #f0f0f0;

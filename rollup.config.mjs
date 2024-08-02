@@ -48,6 +48,10 @@ export default [
             find: 'constants',
             replacement: path.resolve(__dirname, 'src/constants'),
           },
+          {
+            find: 'theme',
+            replacement: path.resolve(__dirname, 'src/theme'),
+          },
         ],
       }),
       resolve(),

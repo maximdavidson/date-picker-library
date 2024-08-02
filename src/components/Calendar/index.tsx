@@ -7,6 +7,8 @@ import {
   HeaderContainer,
 } from './styled';
 import { ErrorBoundary } from '../ErrorBoundary';
+import { ThemeProvider } from 'styled-components';
+import { theme } from 'theme/theme';
 import PrevImg from 'assets/Prev.png';
 import NextImg from 'assets/Next.png';
 import { MonthTitle } from './MonthTitle';
@@ -80,55 +82,57 @@ export const Calendar: FC<CalendarProps> = (props) => {
 
   return (
     <ErrorBoundary>
-      <CalendarContainer>
-        <HeaderContainer>
+      <ThemeProvider theme={theme}>
+        <CalendarContainer>
+          <HeaderContainer>
+            {mode === 'date' && (
+              <>
+                <ArrowButtonPrev
+                  onClick={handlePrevMonth}
+                  src={PrevImg}
+                  alt="Previous Month"
+                />
+                <MonthTitle
+                  currentDate={currentDate}
+                  onMonthTitleClick={handleMonthTitleClick}
+                  onYearClick={handleYearClick}
+                />
+                <ArrowButtonNext
+                  onClick={handleNextMonth}
+                  src={NextImg}
+                  alt="Next Month"
+                />
+              </>
+            )}
+            {mode === 'month' && (
+              <MonthPicker
+                currentMonth={currentDate.getMonth()}
+                onMonthSelect={handleMonthSelect}
+              />
+            )}
+            {mode === 'year' && (
+              <YearPicker
+                currentYear={currentDate.getFullYear()}
+                onYearSelect={handleYearSelect}
+              />
+            )}
+          </HeaderContainer>
           {mode === 'date' && (
-            <>
-              <ArrowButtonPrev
-                onClick={handlePrevMonth}
-                src={PrevImg}
-                alt="Previous Month"
-              />
-              <MonthTitle
-                currentDate={currentDate}
-                onMonthTitleClick={handleMonthTitleClick}
-                onYearClick={handleYearClick}
-              />
-              <ArrowButtonNext
-                onClick={handleNextMonth}
-                src={NextImg}
-                alt="Next Month"
-              />
-            </>
-          )}
-          {mode === 'month' && (
-            <MonthPicker
-              currentMonth={currentDate.getMonth()}
-              onMonthSelect={handleMonthSelect}
+            <GridSlider
+              isMondayFirst={isMondayFirst}
+              currentDate={currentDate}
+              selectedRange={selectedRange}
+              onDateSelect={onDateSelect}
+              isHolidayDate={isHolidayDate}
+              getHolidayName={getHolidayName}
+              foundedDate={foundedDate}
+              showTodo={showTodo}
+              weekendColor={weekendColor}
+              holidayColor={holidayColor}
             />
           )}
-          {mode === 'year' && (
-            <YearPicker
-              currentYear={currentDate.getFullYear()}
-              onYearSelect={handleYearSelect}
-            />
-          )}
-        </HeaderContainer>
-        {mode === 'date' && (
-          <GridSlider
-            isMondayFirst={isMondayFirst}
-            currentDate={currentDate}
-            selectedRange={selectedRange}
-            onDateSelect={onDateSelect}
-            isHolidayDate={isHolidayDate}
-            getHolidayName={getHolidayName}
-            foundedDate={foundedDate}
-            showTodo={showTodo}
-            weekendColor={weekendColor}
-            holidayColor={holidayColor}
-          />
-        )}
-      </CalendarContainer>
+        </CalendarContainer>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 };

@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { Title, Month, Year } from './styled';
 import { MONTHS } from 'constants/months';
+import { ThemeProvider } from 'styled-components';
+import { theme } from 'theme/theme';
 
 type MonthTitleProps = {
   currentDate: Date;
@@ -17,9 +19,11 @@ export const MonthTitle: FC<MonthTitleProps> = ({
   const year = currentDate.getFullYear();
 
   return (
-    <Title>
-      <Month onClick={onMonthTitleClick}>{monthName}</Month>
-      <Year onClick={onYearClick}>{year}</Year>
-    </Title>
+    <ThemeProvider theme={theme}>
+      <Title>
+        <Month onClick={onMonthTitleClick}>{monthName}</Month>
+        <Year onClick={onYearClick}>{year}</Year>
+      </Title>
+    </ThemeProvider>
   );
 };

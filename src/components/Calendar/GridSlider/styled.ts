@@ -20,10 +20,10 @@ export const DayBox = styled.div<{
   weekendColor: string;
   holidayColor: string;
 }>`
-  font-size: 13px;
+  font-size: ${({ theme }) => theme.fontSize.small};
   padding: 8px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,17 +35,18 @@ export const DayBox = styled.div<{
     isStartDate,
     isEndDate,
     isFound,
+    theme,
   }) => {
-    if (isStartDate) return 'rgba(47, 128, 237, 0.6)';
-    if (isEndDate) return 'rgba(47, 128, 237, 1)';
-    if (isSelected) return 'rgba(47, 128, 237, 0.1)';
-    if (isFound) return 'rgba(47, 128, 237, 0.6)';
-    return isToday ? 'rgba(47, 128, 237, 1)' : 'transparent';
+    if (isStartDate) return theme.colors.primaryLight;
+    if (isEndDate) return theme.colors.primary;
+    if (isSelected) return theme.colors.primaryLighter;
+    if (isFound) return theme.colors.primaryLight;
+    return isToday ? theme.colors.primary : 'transparent';
   }};
   border: 1px solid rgba(225, 225, 225, 0);
   box-sizing: border-box;
   &:not([data-today='true']):hover {
-    background-color: rgba(241, 241, 241, 1);
+    background-color: ${({ theme }) => theme.colors.lightGrey};
   }
   color: ${({
     isToday,
@@ -58,22 +59,23 @@ export const DayBox = styled.div<{
     hasTodo,
     weekendColor,
     holidayColor,
+    theme,
   }) => {
-    if (hasTodo) return 'rgba(230, 188, 19, 1)';
-    if (isStartDate || isEndDate) return 'rgba(255, 255, 255, 1)';
-    if (isToday) return 'rgba(255, 255, 255, 1)';
-    if (isOutsideMonth) return 'rgba(170, 170, 170, 1)';
+    if (hasTodo) return theme.colors.todo;
+    if (isStartDate || isEndDate) return theme.colors.white;
+    if (isToday) return theme.colors.white;
+    if (isOutsideMonth) return theme.colors.grey;
     if (isWeekend) return weekendColor;
     if (isHoliday) return holidayColor;
-    if (isFound) return 'rgba(255, 255, 255, 1)';
+    if (isFound) return theme.colors.white;
     return 'inherit';
   }};
-  border-radius: ${({ isStartDate, isEndDate, isSelected, isFound }) => {
-    if (isStartDate) return '8px 0px 0px 8px';
-    if (isEndDate) return '0px 8px 8px 0px';
+  border-radius: ${({ isStartDate, isEndDate, isSelected, isFound, theme }) => {
+    if (isStartDate) return `${theme.borderRadius} 0 0 ${theme.borderRadius}`;
+    if (isEndDate) return `0 ${theme.borderRadius} ${theme.borderRadius} 0`;
     if (isSelected) return '0';
-    if (isFound) return '8px';
-    return '8px';
+    if (isFound) return theme.borderRadius;
+    return theme.borderRadius;
   }};
 `;
 
@@ -83,10 +85,10 @@ export const HolidayNameContainer = styled.div`
   left: 50px;
   margin-top: 10px;
   padding: 10px;
-  background-color: rgba(234, 119, 104, 1);
+  background-color: ${({ theme }) => theme.colors.secondary};
   border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 1);
+  border-radius: ${({ theme }) => theme.borderRadius};
+  font-size: ${({ theme }) => theme.fontSize.medium};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.white};
 `;

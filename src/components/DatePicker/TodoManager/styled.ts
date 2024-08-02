@@ -4,10 +4,10 @@ export const TodoModal = styled.div`
   position: absolute;
   top: 100px;
   left: 9px;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: ${({ theme }) => theme.colors.white};
   padding: 20px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 100;
 `;
@@ -21,9 +21,9 @@ export const TodoItem = styled.li`
   button {
     background-color: transparent;
     border: none;
-    color: rgba(139, 244, 120, 1);
+    color: ${({ theme }) => theme.colors.success};
     cursor: pointer;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.fontSize.medium};
   }
 `;
 

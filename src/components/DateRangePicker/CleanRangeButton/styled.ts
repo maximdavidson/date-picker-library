@@ -8,13 +8,13 @@ export const StyledButton = styled.button`
   padding: 10px 0;
   border-radius: 0 0 8px 8px;
   border: 1px solid rgba(225, 225, 225, 1);
-  background-color: rgba(255, 255, 255, 1);
+  background-color: ${({ theme }) => theme.colors.white};
   text-align: center;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.fontSize.small};
   color: rgba(51, 51, 51, 1);
 
   &:hover {
-    background-color: rgba(170, 170, 170, 1);
+    background-color: ${({ theme }) => theme.colors.grey};
   }
 
   &:active {

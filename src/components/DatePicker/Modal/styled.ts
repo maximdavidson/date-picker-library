@@ -11,7 +11,7 @@ export const ModalWrapper = styled.div`
   width: 224px;
   height: 26px;
   padding: 8px 15px;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   border: 1px solid #dcdcdc;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
@@ -26,8 +26,8 @@ export const CalendarIcon = styled.img`
 export const Input = styled.input<InputProps>`
   border: none;
   outline: none;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: ${({ theme }) => theme.fontSize.medium};
+  font-weight: ${({ theme }) => theme.fontWeight.normal};
   color: ${({ isValid }) =>
     isValid ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 0, 0, 0.6)'};
   width: 100%;
