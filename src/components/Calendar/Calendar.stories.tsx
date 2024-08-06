@@ -11,7 +11,6 @@ export default {
   argTypes: {
     isMondayFirst: { control: 'boolean' },
     isWeekendDate: { action: 'isWeekendDate' },
-    isHolidayDate: { action: 'isHolidayDate' },
     weekendColor: { control: 'color' },
     holidayColor: { control: 'color' },
   },
