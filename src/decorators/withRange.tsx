@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useCallback } from 'react';
 import { CalendarProps } from 'components/Calendar/types';
 import { Button } from 'components/DateRangePicker/CleanRangeButton';
 
@@ -9,21 +9,29 @@ export const withRange = (Component: FC<CalendarProps>) => {
       end: Date | null;
     }>({ start: null, end: null });
 
+    const startNewRange = (date: Date) => {
+      setRange({ start: date, end: null });
+    };
+
+    const completeRange = (startDate: Date, endDate: Date) => {
+      setRange({ start: startDate, end: endDate });
+    };
+
     const handleDateSelect = (date: Date) => {
       if (!range.start || (range.start && range.end)) {
-        setRange({ start: date, end: null });
+        startNewRange(date);
       } else {
-        if (date < range.start) {
-          setRange({ start: date, end: range.start });
-        } else {
-          setRange({ ...range, end: date });
-        }
+        const isStartDateEarlier = date < range.start;
+        completeRange(
+          isStartDateEarlier ? date : range.start,
+          isStartDateEarlier ? range.start : date,
+        );
       }
     };
 
-    const handleClearRange = () => {
+    const handleClearRange = useCallback(() => {
       setRange({ start: null, end: null });
-    };
+    }, []);
 
     return (
       <div>

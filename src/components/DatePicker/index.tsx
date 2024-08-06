@@ -48,16 +48,23 @@ export const DatePicker: FC<DatePickerProps> = ({
   };
 
   const handleInputFocus = () => {
+    if (!date) {
+      const today = new Date().toLocaleDateString('en-GB');
+      setDate(today);
+      setIsDateValid(true);
+    }
     setIsCalendarVisible(true);
     setPlaceholder('dd/mm/yyyy');
     setIsFocused(true);
   };
 
   const handleInputBlur = () => {
-    if (!date) {
-      setPlaceholder('Choose Date');
-    }
     setIsFocused(false);
+    if (!date || !isValidDate(date)) {
+      setDate('');
+      setPlaceholder('Choose Date');
+      setIsDateValid(true);
+    }
   };
 
   const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -88,16 +95,24 @@ export const DatePicker: FC<DatePickerProps> = ({
     ? new Date(date.split('/').reverse().join('-'))
     : null;
 
-  const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (
-      datePickerRef.current &&
-      !datePickerRef.current.contains(event.target as Node) &&
-      calendarRef.current &&
-      !calendarRef.current.contains(event.target as Node)
-    ) {
-      setIsCalendarVisible(false);
-    }
-  }, []);
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (
+        datePickerRef.current &&
+        !datePickerRef.current.contains(event.target as Node) &&
+        calendarRef.current &&
+        !calendarRef.current.contains(event.target as Node)
+      ) {
+        setIsCalendarVisible(false);
+        if (!date || !isValidDate(date)) {
+          setDate('');
+          setPlaceholder('Choose Date');
+          setIsDateValid(false);
+        }
+      }
+    },
+    [date],
+  );
 
   const handleCalendarIconClick = () => {
     setIsCalendarVisible(true);
@@ -110,6 +125,8 @@ export const DatePicker: FC<DatePickerProps> = ({
     };
   }, [handleClickOutside]);
 
+  const CalendarComponent = withHolidays ? CalendarWithHolidays : Calendar;
+
   return (
     <Container ref={datePickerRef}>
       <Modal
@@ -120,32 +137,21 @@ export const DatePicker: FC<DatePickerProps> = ({
         onKeyDown={handleInputKeyDown}
         onClear={handleClear}
         onCalendarIconClick={handleCalendarIconClick}
-        placeholder={placeholder}
+        placeholder={isFocused ? placeholder : 'Choose Date'}
         isDateValid={isDateValid}
         isFocused={isFocused}
         isCalendarVisible={isCalendarVisible}
       />
       {isCalendarVisible && (
         <Wrapper ref={calendarRef}>
-          {withHolidays ? (
-            <CalendarWithHolidays
-              {...props}
-              foundedDate={parsedDate}
-              showTodo={true}
-              weekendColor={weekendColor}
-              holidayColor={holidayColor}
-              onDateSelect={handleDateSelect}
-            />
-          ) : (
-            <Calendar
-              {...props}
-              foundedDate={parsedDate}
-              showTodo={true}
-              weekendColor={weekendColor}
-              holidayColor={holidayColor}
-              onDateSelect={handleDateSelect}
-            />
-          )}
+          <CalendarComponent
+            {...props}
+            foundedDate={parsedDate}
+            showTodo={true}
+            weekendColor={weekendColor}
+            holidayColor={holidayColor}
+            onDateSelect={handleDateSelect}
+          />
         </Wrapper>
       )}
     </Container>

@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, useEffect } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { GridSlider } from './GridSlider';
 import {
   CalendarContainer,
@@ -38,47 +38,34 @@ export const Calendar: FC<CalendarProps> = (props) => {
     }
   }, [foundedDate]);
 
-  const handlePrevMonth = useCallback(() => {
+  const handlePrevMonth = () => {
     setCurrentDate(
       (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1),
     );
-  }, []);
+  };
 
-  const handleNextMonth = useCallback(() => {
+  const handleNextMonth = () => {
     setCurrentDate(
       (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1),
     );
-  }, []);
+  };
 
-  const handleModeChange = useCallback((newMode: 'date' | 'month' | 'year') => {
+  const handleModeChange = (newMode: 'date' | 'month' | 'year') => {
     setMode(newMode);
-  }, []);
+  };
 
-  const handleMonthSelect = useCallback(
-    (month: number) => {
-      setCurrentDate((prev) => new Date(prev.getFullYear(), month, 1));
-      handleModeChange('date');
-    },
-    [handleModeChange],
-  );
+  const handleMonthSelect = (month: number) => {
+    setCurrentDate((prev) => new Date(prev.getFullYear(), month, 1));
+    handleModeChange('date');
+  };
 
-  const handleYearSelect = useCallback(
-    (year: number) => {
-      setCurrentDate((prev) => new Date(year, prev.getMonth(), 1));
-      handleModeChange('date');
-    },
-    [handleModeChange],
-  );
+  const handleYearSelect = (year: number) => {
+    setCurrentDate((prev) => new Date(year, prev.getMonth(), 1));
+    handleModeChange('date');
+  };
 
-  const handleMonthTitleClick = useCallback(
-    () => handleModeChange('month'),
-    [handleModeChange],
-  );
-
-  const handleYearClick = useCallback(
-    () => handleModeChange('year'),
-    [handleModeChange],
-  );
+  const handleMonthTitleClick = () => handleModeChange('month');
+  const handleYearClick = () => handleModeChange('year');
 
   return (
     <ErrorBoundary>

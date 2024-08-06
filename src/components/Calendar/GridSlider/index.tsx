@@ -15,7 +15,7 @@ import {
   isEndDate,
 } from 'utils/dateUtils';
 import { TodoManager } from 'components/DatePicker/TodoManager';
-import useLocalStorage from 'hooks/useLocalStorage';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import { GridSliderProps } from './types';
 
 export const GridSlider: FC<GridSliderProps> = ({
