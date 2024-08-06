@@ -1,5 +1,7 @@
-export const formatInputDate = (value: string) => {
-  const digits = value.replace(/\D/g, '');
+import { NON_DIGIT_REGEX } from 'constants/digitRegex';
+
+export const formatInputDate = (value: string): string => {
+  const digits = value.replace(NON_DIGIT_REGEX, '');
   const chars = digits.split('');
 
   if (chars.length > 2) {

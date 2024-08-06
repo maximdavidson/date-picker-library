@@ -26,7 +26,7 @@ module.exports = {
           ['components', './src/components'],
           ['decorators', './src/decorators'],
           ['hooks', './src/hooks'],
-          ['providers', './src/providers'],
+          ['context', './src/context'],
           ['utils', './src/utils'],
           ['constants', './src/constants'],
         ],

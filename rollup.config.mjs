@@ -40,8 +40,8 @@ export default [
           },
           { find: 'hooks', replacement: path.resolve(__dirname, 'src/hooks') },
           {
-            find: 'providers',
-            replacement: path.resolve(__dirname, 'src/providers'),
+            find: 'context',
+            replacement: path.resolve(__dirname, 'src/context'),
           },
           { find: 'utils', replacement: path.resolve(__dirname, 'src/utils') },
           {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { Calendar } from './index';
 import { CalendarProps } from './types';
-import { DateProvider } from 'providers/DateProviders';
+import { DateProvider } from 'context/DateProviders';
 import { WithGlobalStyles } from '../../../.storybook/WithGlobalStyles';
 
 export default {

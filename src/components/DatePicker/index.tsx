@@ -1,9 +1,18 @@
-import React, { useState, ChangeEvent, FC, KeyboardEvent } from 'react';
+import React, {
+  useState,
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  useRef,
+  useCallback,
+  useEffect,
+} from 'react';
 import { Calendar } from '../Calendar';
 import { CalendarProps } from '../Calendar/types';
 import { withHolidays } from 'decorators/withHolidays';
 import { Modal } from './Modal';
 import { formatInputDate } from 'utils/formatInputDate';
+import { Container, Wrapper } from './styled';
 
 type DatePickerProps = CalendarProps & {
   withHolidays?: boolean;
@@ -28,6 +37,9 @@ export const DatePicker: FC<DatePickerProps> = ({
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
   const [placeholder, setPlaceholder] = useState('Choose Date');
   const [isDateValid, setIsDateValid] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = formatInputDate(event.target.value);
@@ -38,12 +50,14 @@ export const DatePicker: FC<DatePickerProps> = ({
   const handleInputFocus = () => {
     setIsCalendarVisible(true);
     setPlaceholder('dd/mm/yyyy');
+    setIsFocused(true);
   };
 
   const handleInputBlur = () => {
     if (!date) {
       setPlaceholder('Choose Date');
     }
+    setIsFocused(false);
   };
 
   const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -63,12 +77,41 @@ export const DatePicker: FC<DatePickerProps> = ({
     setIsDateValid(false);
   };
 
+  const handleDateSelect = (selectedDate: Date) => {
+    const formattedDate = selectedDate.toLocaleDateString('en-GB');
+    setDate(formattedDate);
+    setIsDateValid(true);
+    setIsCalendarVisible(true);
+  };
+
   const parsedDate = isValidDate(date)
     ? new Date(date.split('/').reverse().join('-'))
     : null;
 
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (
+      datePickerRef.current &&
+      !datePickerRef.current.contains(event.target as Node) &&
+      calendarRef.current &&
+      !calendarRef.current.contains(event.target as Node)
+    ) {
+      setIsCalendarVisible(false);
+    }
+  }, []);
+
+  const handleCalendarIconClick = () => {
+    setIsCalendarVisible(true);
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
   return (
-    <div>
+    <Container ref={datePickerRef}>
       <Modal
         value={date}
         onChange={handleInputChange}
@@ -76,27 +119,35 @@ export const DatePicker: FC<DatePickerProps> = ({
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}
         onClear={handleClear}
+        onCalendarIconClick={handleCalendarIconClick}
         placeholder={placeholder}
         isDateValid={isDateValid}
+        isFocused={isFocused}
+        isCalendarVisible={isCalendarVisible}
       />
-      {isCalendarVisible &&
-        (withHolidays ? (
-          <CalendarWithHolidays
-            {...props}
-            foundedDate={parsedDate}
-            showTodo={true}
-            weekendColor={weekendColor}
-            holidayColor={holidayColor}
-          />
-        ) : (
-          <Calendar
-            {...props}
-            foundedDate={parsedDate}
-            showTodo={true}
-            weekendColor={weekendColor}
-            holidayColor={holidayColor}
-          />
-        ))}
-    </div>
+      {isCalendarVisible && (
+        <Wrapper ref={calendarRef}>
+          {withHolidays ? (
+            <CalendarWithHolidays
+              {...props}
+              foundedDate={parsedDate}
+              showTodo={true}
+              weekendColor={weekendColor}
+              holidayColor={holidayColor}
+              onDateSelect={handleDateSelect}
+            />
+          ) : (
+            <Calendar
+              {...props}
+              foundedDate={parsedDate}
+              showTodo={true}
+              weekendColor={weekendColor}
+              holidayColor={holidayColor}
+              onDateSelect={handleDateSelect}
+            />
+          )}
+        </Wrapper>
+      )}
+    </Container>
   );
 };

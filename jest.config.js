@@ -10,7 +10,7 @@ module.exports = {
     '^components/(.*)$': '<rootDir>/src/components/$1',
     '^decorators/(.*)$': '<rootDir>/src/decorators/$1',
     '^hooks/(.*)$': '<rootDir>/src/hooks/$1',
-    '^providers/(.*)$': '<rootDir>/src/providers/$1',
+    '^context/(.*)$': '<rootDir>/src/context/$1',
     '^utils/(.*)$': '<rootDir>/src/utils/$1',
     '^constants/(.*)$': '<rootDir>/src/constants/$1',
     '^theme/(.*)$': '<rootDir>/src/theme/$1',

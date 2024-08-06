@@ -28,7 +28,7 @@ const config: StorybookConfig = {
       components: path.resolve(__dirname, '../src/components'),
       decorators: path.resolve(__dirname, '../src/decorators'),
       hooks: path.resolve(__dirname, '../src/hooks'),
-      providers: path.resolve(__dirname, '../src/providers'),
+      context: path.resolve(__dirname, '../src/context'),
       utils: path.resolve(__dirname, '../src/utils'),
       constants: path.resolve(__dirname, '../src/constants'),
       theme: path.resolve(__dirname, '../src/theme'),

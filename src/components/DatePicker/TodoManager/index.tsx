@@ -1,4 +1,11 @@
-import React, { ChangeEvent, FC, Dispatch, SetStateAction } from 'react';
+import React, {
+  ChangeEvent,
+  FC,
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useEffect,
+} from 'react';
 import { TodoModal, TodoItem, Add, Close } from './styled';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'theme/theme';
@@ -17,6 +24,7 @@ export const TodoManager: FC<TodoManagerProps> = ({
   setTodos,
 }) => {
   const [newTodo, setNewTodo] = React.useState('');
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const handleTodoChange = (event: ChangeEvent<HTMLInputElement>) => {
     setNewTodo(event.target.value);
@@ -43,11 +51,24 @@ export const TodoManager: FC<TodoManagerProps> = ({
     setTodos(updatedTodos);
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   if (!pressedDate) return null;
 
   return (
     <ThemeProvider theme={theme}>
-      <TodoModal>
+      <TodoModal ref={modalRef}>
         <h4>Todos for {pressedDate.toDateString()}</h4>
         <input
           type="text"

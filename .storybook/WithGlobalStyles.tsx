@@ -1,6 +1,6 @@
 import React from 'react';
 import { GlobalStyle } from '../src/globalStyles';
-import { DateProvider } from 'providers/DateProviders';
+import { DateProvider } from 'context/DateProviders';
 
 export const WithGlobalStyles: React.FC<React.PropsWithChildren> = ({
   children,

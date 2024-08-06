@@ -1,7 +1,12 @@
+interface Holiday {
+  name: string;
+  date: Date;
+}
+
 export const getHolidayName = (
   date: Date,
-  holidays: { name: string; date: Date }[],
-) => {
+  holidays: Holiday[],
+): string | null => {
   const holiday = holidays.find(
     (holiday) =>
       holiday.date.getDate() === date.getDate() &&

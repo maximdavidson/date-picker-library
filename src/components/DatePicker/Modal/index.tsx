@@ -12,8 +12,11 @@ interface ModalProps {
   onBlur: (event: FocusEvent<HTMLInputElement>) => void;
   onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
   onClear: () => void;
+  onCalendarIconClick: () => void;
   placeholder: string;
   isDateValid: boolean;
+  isFocused: boolean;
+  isCalendarVisible: boolean;
 }
 
 export const Modal: FC<ModalProps> = ({
@@ -23,13 +26,22 @@ export const Modal: FC<ModalProps> = ({
   onBlur,
   onKeyDown,
   onClear,
+  onCalendarIconClick,
   placeholder,
   isDateValid,
+  isFocused,
+  isCalendarVisible,
 }) => {
   return (
     <ThemeProvider theme={theme}>
-      <ModalWrapper>
-        <CalendarIcon src={calendar} alt="calendar icon" />
+      <ModalWrapper isFocused={isFocused} isDateValid={isDateValid}>
+        <CalendarIcon
+          src={calendar}
+          alt="calendar icon"
+          onClick={onCalendarIconClick}
+          isCalendarVisible={isCalendarVisible}
+          isDateValid={isDateValid}
+        />
         <Input
           type="text"
           value={value}
